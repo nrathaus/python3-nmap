@@ -256,7 +256,7 @@ class Nmap(object):
         @param: cmd--> the command we want run eg /usr/bin/nmap -oX -  nmmapper.com --top-ports 10
         @param: timeout--> command subprocess timeout in seconds.
         """
-        if (os.path.exists(self.nmaptool)):
+        if os.path.exists(self.nmaptool):
             sub_proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
             try:
                 output, errs = sub_proc.communicate(timeout=timeout)
