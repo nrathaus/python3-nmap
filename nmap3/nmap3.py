@@ -536,7 +536,7 @@ class NmapAsync(Nmap):
             try:
                 data, stderr = await process.communicate()
             except Exception as e:
-                raise (e)
+                raise e
             else:
                 if 0 != process.returncode:
                     raise NmapExecutionError('Error during command: "' + ' '.join(cmd) + '"\n\n' + stderr.decode('utf8'))
