@@ -262,7 +262,7 @@ class Nmap(object):
                 output, errs = sub_proc.communicate(timeout=timeout)
             except Exception as e:
                 sub_proc.kill()
-                raise (e)
+                raise e
             else:
                 if 0 != sub_proc.returncode:
                     raise NmapExecutionError('Error during command: "' + ' '.join(cmd) + '"\n\n' + errs.decode('utf8'))
