@@ -173,10 +173,10 @@ class Nmap(object):
         """
         self.target = target
         dns_brute_args = "{target}  {default}".format(target=target, default=dns_brute)
-        
+
         if args:
             dns_brute_args += " {0}".format(args)
-            
+
         dns_brute_command = self.default_command() + dns_brute_args
         dns_brute_shlex = shlex.split(dns_brute_command)  # prepare it for popen
 
