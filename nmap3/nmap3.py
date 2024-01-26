@@ -23,7 +23,6 @@ import os
 import shlex
 import subprocess
 import sys
-import simplejson as json
 import argparse
 import asyncio
 from xml.etree import ElementTree as ET
