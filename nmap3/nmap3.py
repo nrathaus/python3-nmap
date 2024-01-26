@@ -32,7 +32,6 @@ from nmap3.nmapparser import NmapCommandParser
 from nmap3.utils import get_nmap_path, user_is_root
 from nmap3.exceptions import NmapNotInstalledError, NmapXMLParserError, NmapExecutionError
 
-import xml
 import re
 
 __author__ = 'Wangolo Joel (inquiry@nmapper.com)'
