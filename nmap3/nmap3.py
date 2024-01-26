@@ -117,7 +117,7 @@ class Nmap(object):
 
         command_args = "{target}  {default}".format(target=target, default=arg)
         scancommand = self.default_command() + command_args
-        if (args):
+        if args:
             scancommand += " {0}".format(args)
 
         scan_shlex = shlex.split(scancommand)
@@ -142,7 +142,7 @@ class Nmap(object):
             raise ValueError("Port can not be greater than default 65535")
         self.target = target
 
-        if (args):
+        if args:
             assert (isinstance(args, str)), "Expected string got {0} instead".format(type(args))
 
         top_port_args = " {target} --top-ports {default}".format(target=target, default=default)
@@ -495,7 +495,7 @@ class NmapHostDiscovery(Nmap):
 
         @cmd nmap -sn 192.168.178.1
         """
-        if (args):
+        if args:
             assert (isinstance(args, str)), "Expected string got {0} instead".format(type(args))
         xml_root = self.scan_command(self.no_port_scan, target=target, args=args)
         results = self.parser.filter_top_ports(xml_root)
@@ -506,7 +506,7 @@ class NmapHostDiscovery(Nmap):
         Scan target using the nmap tcp connect
         @cmd nmap -PR 192.168.178.1
         """
-        if (args):
+        if args:
             assert (isinstance(args, str)), "Expected string got {0} instead".format(type(args))
         xml_root = self.scan_command(self.arp_discovery, target=target, args=args)
         results = self.parser.filter_top_ports(xml_root)
@@ -517,7 +517,7 @@ class NmapHostDiscovery(Nmap):
         Scan target using the nmap tcp connect
         @cmd nmap -n 192.168.178.1
         """
-        if (args):
+        if args:
             assert (isinstance(args, str)), "Expected string got {0} instead".format(type(args))
         xml_root = self.scan_command(self.disable_dns, target=target, args=args)
         results = self.parser.filter_top_ports(xml_root)
@@ -551,7 +551,7 @@ class NmapAsync(Nmap):
 
         command_args = "{target}  {default}".format(target=target, default=arg)
         scancommand = self.default_command() + command_args
-        if (args):
+        if args:
             scancommand += " {0}".format(args)
 
         output = await self.run_command(scancommand, timeout=timeout)
@@ -562,7 +562,7 @@ class NmapAsync(Nmap):
     async def scan_top_ports(self, target, default=10, args=None, timeout=None):
         top_port_args = " {target} --top-ports {default}".format(target=target, default=default)
         command = self.default_command() + top_port_args
-        if (args):
+        if args:
             command += " {0}".format(args)
 
         output = await self.run_command(command, timeout=timeout)
@@ -635,7 +635,7 @@ class NmapScanTechniquesAsync(NmapAsync,NmapScanTechniques):
                 scan = " {target} {default}".format(target=target, default=scan_type)
                 scan_type_command = self.default_command() + scan
 
-                if (args):
+                if args:
                     scan_type_command += " {0}".format(args)
 
                 output = await self.run_command(scan_type_command, timeout=timeout)
@@ -644,7 +644,7 @@ class NmapScanTechniquesAsync(NmapAsync,NmapScanTechniques):
         return xml_root
     
     async def nmap_udp_scan(self, target, args=None):
-        if (args):
+        if args:
             assert (isinstance(args, str)), "Expected string got {0} instead".format(type(args))
         xml_root = await self.scan_command(self.udp_scan, target=target, args=args)
         results = self.parser.filter_top_ports(xml_root)
