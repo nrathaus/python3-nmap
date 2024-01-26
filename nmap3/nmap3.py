@@ -364,7 +364,7 @@ class NmapScanTechniques(Nmap):
         xml_root = self.scan_command(self.fin_scan, target=target, args=args)
         results = self.parser.filter_top_ports(xml_root)
         return results
-    
+
     @user_is_root
     def nmap_syn_scan(self, target, args=None):
         """
@@ -383,12 +383,12 @@ class NmapScanTechniques(Nmap):
 
         @cmd nmap -sT 192.168.178.1
         """
-        if (args):
+        if args:
             assert (isinstance(args, str)), "Expected string got {0} instead".format(type(args))
         xml_root = self.scan_command(self.tcp_connt, target=target, args=args)
         results = self.parser.filter_top_ports(xml_root)
         return results
-    
+
     @user_is_root
     def nmap_udp_scan(self, target, args=None):
         """
@@ -397,7 +397,7 @@ class NmapScanTechniques(Nmap):
         @cmd nmap -sU 192.168.178.1
         """
 
-        if (args):
+        if args:
             assert (isinstance(args, str)), "Expected string got {0} instead".format(type(args))
         xml_root = self.scan_command(self.udp_scan, target=target, args=args)
         results = self.parser.filter_top_ports(xml_root)
