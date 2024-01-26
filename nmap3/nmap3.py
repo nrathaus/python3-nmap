@@ -528,11 +528,11 @@ class NmapAsync(Nmap):
         super(NmapAsync, self).__init__(path=path)
         self.stdout = asyncio.subprocess.PIPE
         self.stderr = asyncio.subprocess.PIPE
-        
+
     async def run_command(self, cmd, timeout=None):        
         if (os.path.exists(self.nmaptool)):            
             process = await asyncio.create_subprocess_shell(cmd,stdout=self.stdout,stderr=self.stderr)
-            
+
             try:
                 data, stderr = await process.communicate()
             except Exception as e:
@@ -545,7 +545,7 @@ class NmapAsync(Nmap):
                 return data.decode('utf8').strip()
         else:
             raise NmapNotInstalledError()
-    
+
     async def scan_command(self, target, arg, args=None, timeout=None):
         self.target == target
 
@@ -558,7 +558,7 @@ class NmapAsync(Nmap):
         xml_root = self.get_xml_et(output)
 
         return xml_root
-        
+
     async def scan_top_ports(self, target, default=10, args=None, timeout=None):
         top_port_args = " {target} --top-ports {default}".format(target=target, default=default)
         command = self.default_command() + top_port_args
@@ -571,16 +571,16 @@ class NmapAsync(Nmap):
 
         self.top_ports = self.parser.filter_top_ports(self.get_xml_et(output))
         return self.top_ports
-    
+
     async def nmap_dns_brute_script(self, target, dns_brute="--script dns-brute.nse", args=None, timeout=None):
         self.target = target
 
         dns_brute_args = "{target}  {default}".format(target=target, default=dns_brute)
         dns_brute_command = self.default_command() + dns_brute_args
-        
+
         if args:
             dns_brute_command += " {0}".format(args)
-            
+
         # Run the command and get the output
         output = await self.run_command(dns_brute_command, timeout=timeout)
         subdomains = self.parser.filter_subdomains(self.get_xml_et(output))
@@ -615,7 +615,7 @@ class NmapScanTechniquesAsync(NmapAsync,NmapScanTechniques):
     def __init__(self, path=None):
         super(NmapScanTechniquesAsync, self).__init__(path=path)
         self.udp_scan = "-sU"
-        
+
     async def scan_command(self, scan_type, target, args, timeout=None):
         def tpl(i):
             scan_template = {
@@ -642,18 +642,18 @@ class NmapScanTechniquesAsync(NmapAsync,NmapScanTechniques):
                 xml_root = self.get_xml_et(output)
 
         return xml_root
-    
+
     async def nmap_udp_scan(self, target, args=None):
         if args:
             assert (isinstance(args, str)), "Expected string got {0} instead".format(type(args))
         xml_root = await self.scan_command(self.udp_scan, target=target, args=args)
         results = self.parser.filter_top_ports(xml_root)
         return results
-        
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(prog="Python3 nmap")
     parser.add_argument('-d', '--d', help='Help', required=True)
     args = parser.parse_args()
-    
+
     nmap = NmapScanTechniquesAsync()
     asyncio.run(nmap.nmap_udp_scan(target='127.0.0.1'))
