@@ -271,7 +271,7 @@ class Nmap(object):
                 return output.decode('utf8').strip()
         else:
             raise NmapNotInstalledError()
-            
+
     def get_xml_et(self, command_output):
         """
         @ return xml ET
@@ -320,7 +320,9 @@ class NmapScanTechniques(Nmap):
         self.ip_scan = "-sO"
         self.parser = NmapCommandParser(None)
 
-    # Unique method for repetitive tasks - Use of 'target' variable instead of 'host' or 'subnet' - no need to make difference between 2 strings that are used for the same purpose. Creating a scan template as a switcher
+    # Unique method for repetitive tasks - Use of 'target' variable instead of 'host' or 'subnet'
+    # - no need to make difference between 2 strings that are used for the same purpose.
+    # Creating a scan template as a switcher
     def scan_command(self, scan_type, target, args, timeout=None):
         def tpl(i):
             scan_template = {
