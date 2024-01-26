@@ -147,7 +147,7 @@ class Nmap(object):
 
         top_port_args = " {target} --top-ports {default}".format(target=target, default=default)
         scan_command = self.default_command() + top_port_args
-        if (args):
+        if args:
             scan_command += " {0}".format(args)
         scan_shlex = shlex.split(scan_command)
 
