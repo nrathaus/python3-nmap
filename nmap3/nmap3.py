@@ -468,7 +468,7 @@ class NmapHostDiscovery(Nmap):
                 scan = " {target} {default}".format(target=target, default=scan_type)
                 scan_type_command = self.default_command() + scan
 
-                if (args):
+                if args:
                     scan_type_command += " {0}".format(args)
 
                 scan_shlex = shlex.split(scan_type_command)
